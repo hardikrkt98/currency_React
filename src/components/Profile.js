@@ -1,6 +1,7 @@
 import React from "react";
 import EditProfile from './EdifProfile';
 import ProfileInfo from './ProfileInfo';
+import ProfileContext from '../contexts/profileContexts'
 class Profile extends React.Component{
     constructor(props) {
         super(props);
@@ -31,31 +32,27 @@ class Profile extends React.Component{
 
 
     render() {
-        const {isEditing} = this.state;
+        const {profile,isEditing} = this.state;
 
 
         return (
-            <div>
-             <div>
-                 {isEditing? this._editUI():this._infoUI()}
+            //Here we want to provide state , we will wrap the compoenent with context provider
 
-             </div>
-
-                <button onClick={this._toggleEdit}>
-
-                    {isEditing? 'Close Editor':"Edit Profile"}
-
-                </button>
-
-            </div>
-
-
-
-
+            <ProfileContext.Provider
+            value={{
+                profile:profile,
+                updateProfile:this.updateProfile
+            }
+            }
+            >
+                <div>
+                    <div>{isEditing ? this._editUI() : this._infoUI()}</div>
+                    <button onClick={this._toggleEdit}>
+                        {isEditing ? 'Close Editor' : "Edit Profile"}
+                    </button>
+                </div>
+            </ProfileContext.Provider>
         )
-
-
-
     }
 
     _toggleEdit=()=>
@@ -70,12 +67,12 @@ class Profile extends React.Component{
 
 
     _editUI() {
-        return <EditProfile profile = {this.state.profile} onUpdate={this.updateProfile}/>;
+        return <EditProfile />;
     }
 
     _infoUI() {
 
-        return <ProfileInfo profile = {this.state.profile} />;
+        return <ProfileInfo  />;
     }
 }
 export default Profile;

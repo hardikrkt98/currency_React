@@ -1,5 +1,5 @@
 import React from "react";
-
+import ProfileContext from '../contexts/profileContexts';
 
 class EditPhone extends React.Component
 {
@@ -7,7 +7,7 @@ class EditPhone extends React.Component
         super(props);
 
         this.state={
-            val :   props.phone
+            val :   ' '
 
 
 
@@ -17,7 +17,7 @@ class EditPhone extends React.Component
     handleChange = event => {
        // console.log(event.target.value);
         this.setState({val:event.target.value});
-        console.log(this.state);
+      //  console.log(this.state);
 
 
 
@@ -33,24 +33,33 @@ class EditPhone extends React.Component
     render() {
         const value = this.state.val;
         return (
-          <form onSubmit={this.handlesubmit}>
-            <label>
-                <div>
-                    Edit Phone
+            <ProfileContext.Consumer>
+                {({Profile,updateProfile}) =>(
+                <form onSubmit={(event) =>{event.preventDefault();updateProfile({phone:value})}}>
+                    <label>
+                        <div>
+                            Edit Phone
 
-                </div>
+                        </div>
 
-                <input onChange={this.handleChange} type='tel' value={value} />
-            </label>
-              <button type="submit">
-                  Submit
-              </button>
-          </form>
-
-
+                        <input onChange={this.handleChange} type='tel' value={value} />
+                    </label>
+                    <button type="submit">
+                        Submit
+                    </button>
+                </form>
 
 
-        )
+                    )
+                }
+
+
+
+            </ProfileContext.Consumer>
+        );
+
+
+
     }
 
 

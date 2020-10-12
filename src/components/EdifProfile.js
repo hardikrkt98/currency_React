@@ -3,14 +3,12 @@ import EditPhone from './EditPhone';
 
 function EditProfile({profile,onUpdate})
 {
-    console.log("phone"+profile.phone);
+    // console.log("phone"+profile.phone);
 
     return (
         <div>
 
-            <EditPhone phone = {profile.phone}
-            onUpdate= {onUpdate}
-            />
+            <EditPhone/>
 
         </div>
 
