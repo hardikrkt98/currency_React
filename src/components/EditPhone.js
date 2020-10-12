@@ -1,5 +1,6 @@
 import React from "react";
-
+import ProfileContext from '../contexts/profileContexts';
+import withProfile from "../HOC/WithProfile";
 
 class EditPhone extends React.Component
 {
@@ -7,7 +8,7 @@ class EditPhone extends React.Component
         super(props);
 
         this.state={
-            val :   props.phone
+            val :   props.profile.phone
 
 
 
@@ -15,45 +16,44 @@ class EditPhone extends React.Component
     }
 
     handleChange = event => {
-       // console.log(event.target.value);
+        // console.log(event.target.value);
         this.setState({val:event.target.value});
-        console.log(this.state);
+        //  console.log(this.state);
 
 
 
     };
 
-    handlesubmit=event=>{
-        event.preventDefault();
-      this.props.onUpdate({phone:this.state.val});
-    };
 
 
 
+//YOu cannot access the constructor inside ProfileContext.Consumer to set the initial value :)
+    //WE need to use HIgher ORder Compoent to achieve that
     render() {
         const value = this.state.val;
+        const {profile,updateProfile} = this.props;
         return (
-          <form onSubmit={this.handlesubmit}>
-            <label>
-                <div>
-                    Edit Phone
 
-                </div>
+                    <form onSubmit={(event) =>{event.preventDefault();updateProfile({phone:value})}}>
+                        <label>
+                            <div>
+                                Edit Phone
 
-                <input onChange={this.handleChange} type='tel' value={value} />
-            </label>
-              <button type="submit">
-                  Submit
-              </button>
-          </form>
+                            </div>
+
+                            <input onChange={this.handleChange} type='tel' value={value} />
+                        </label>
+                        <button type="submit">
+                            Submit
+                        </button>
+                    </form>
+        );
 
 
 
-
-        )
     }
 
 
 }
 
-export default EditPhone;
+export default withProfile(EditPhone);

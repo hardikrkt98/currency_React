@@ -1,32 +1,33 @@
 import React from "react";
+import ProfileContext from "../contexts/profileContexts";
 
+
+//COMPONENT WHICH RETURN THE OTHER COMPONENT IS CALLED HIGHER ORDER COMPOENT
+
+
+// ANYCOMPONENT CALLS PROFILE ------> CALL WENT TO WITH PROFILE -------> WITHPROFILE CALLS PROFILE COMPONENT WITH
 
 function withProfile(BaseComponent)
 {
-  return class HOCComponent extends React.Component {
-      constructor(props) {
-          super(props);
-          this.state = {
-              profile: {}
-          }
-      }
+ return function (props) {
+return (
+    <ProfileContext.Consumer>
+        {({profile,updateProfile})=>(
+            <BaseComponent
+                {...props}
+                profile={profile}
+                updateProfile = {updateProfile}
+            />
+        )}
+
+    </ProfileContext.Consumer>
+)
+
+ }
 
 
-      componentDidMount() {
-       const profiles = {
-               name:'Hardik',
-               email:'sunsee@as.com',
-               phone:'9787897979'
 
-       };
-       this.setState({profiles});
-
-
-      }
-
-      render() {
-          return <BaseComponent profile ={this.state.profile} {...this.props}/>
-      };
-
-  }
 }
+
+export  default withProfile;
+
