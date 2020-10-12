@@ -1,17 +1,13 @@
 import React from "react";
 import EditProfile from './EdifProfile';
 import ProfileInfo from './ProfileInfo';
+import withProfiler from '../HOC/WithProfile';
 class Profile extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             profile :{
-                name:'Hardik',
-                email:'sunsee@as.com',
-                phone:'9787897979'
-
-
-            },
+     },
             isEditing : false,
         }
     }
@@ -32,7 +28,7 @@ class Profile extends React.Component{
 
     render() {
         const {isEditing} = this.state;
-
+        const {profile} = this.props;
 
         return (
             <div>
@@ -78,4 +74,6 @@ class Profile extends React.Component{
         return <ProfileInfo profile = {this.state.profile} />;
     }
 }
-export default Profile;
+
+const higherComponent = withProfiler(Profile);
+export default higherComponent;
