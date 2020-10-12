@@ -29,7 +29,8 @@ class EditPhone extends React.Component
     };
 
 
-
+//YOu cannot access the constructor inside ProfileContext.Consumer to set the initial value :)
+    //WE need to use HIgher ORder Compoent to achieve that
     render() {
         const value = this.state.val;
         return (
